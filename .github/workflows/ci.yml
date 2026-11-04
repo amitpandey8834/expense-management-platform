@@ -18,6 +18,17 @@ jobs:
     name: Application Validation
     runs-on: ubuntu-24.04
 
+    services:
+      mongodb:
+        image: mongo:8
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --quiet --eval 'db.adminCommand(\"ping\").ok'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -38,6 +49,14 @@ jobs:
       - name: Lint backend
         run: npm run lint
         working-directory: backend
+
+      - name: Run backend API tests
+        run: npm test
+        working-directory: backend
+        env:
+          NODE_ENV: test
+          MONGO_URI: mongodb://127.0.0.1:27017/expense_management_test
+          JWT_SECRET: ci-test-secret-not-for-production
 
       - name: Install frontend dependencies
         run: npm ci

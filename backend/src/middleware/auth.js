@@ -1,3 +1,4 @@
+
 const jwt = require("jsonwebtoken");
 
 const config = require("../config/env");
@@ -18,7 +19,7 @@ const authenticate = (req, res, next) => {
     req.user = decoded;
 
     next();
-  } catch (error) {
+  } catch {
     return next(new AppError("Invalid or expired token", 401));
   }
 };

@@ -2,8 +2,8 @@ const globals = require("globals");
 
 module.exports = [
   {
-    files: ["**/*.js"],
-    ignores: ["node_modules/**"],
+    files: [ "**/*.js" ],
+    ignores: [ "node_modules/**" ],
 
     languageOptions: {
       ecmaVersion: "latest",
@@ -14,10 +14,10 @@ module.exports = [
     },
 
     rules: {
-      "no-unused-vars": "warn",
+      "no-unused-vars": [ "warn", { argsIgnorePattern: "^_" } ],
       "no-console": "off",
-      "semi": ["error", "always"],
-      "quotes": ["error", "double"],
+      "semi": [ "error", "always" ],
+      "quotes": [ "error", "double" ],
     },
   },
 ];
